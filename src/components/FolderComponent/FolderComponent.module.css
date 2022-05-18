@@ -1,0 +1,25 @@
+.folder {
+  border: 1px solid green;
+}
+
+.folder__title-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 3px;
+  opacity: 1;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+}
+
+.folder__title-container:hover {
+  opacity: 0.6;
+}
+
+.folder__title {
+  margin: 0;
+  padding: 0;
+}
+
+.folder__children {
+  margin-left: 20px;
+}

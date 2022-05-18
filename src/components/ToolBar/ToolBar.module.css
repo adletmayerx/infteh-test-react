@@ -1,0 +1,14 @@
+.tool-bar {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  margin-left: 20px;
+}
+
+.tool-bar__item {
+  margin: 0;
+  padding: 0;
+}
