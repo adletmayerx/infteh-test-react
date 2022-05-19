@@ -1,5 +1,6 @@
 .folder {
   border: 1px solid green;
+  user-select: none;
 }
 
 .folder__title-container {

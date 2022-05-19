@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styles from "./App.module.css";
 import { Header, MainComponent } from "./components";
-import { ExplorerDataType } from "./types";
+import { UnsortedDataType } from "./types";
+import selectedIdContext from "./contexts/selected-id-context";
+
 
 function App() {
+  const [selectedId, setSelectedId] = useState(null);
   const explorerDataUnsorted = [
+    {
+      title: "Folder0",
+      id: 100,
+      type: "folder",
+      childrenIds: [101],
+    },
     {
       title: "File1",
       extension: "css",
@@ -18,7 +27,7 @@ function App() {
       id: 2,
       type: "file",
       value: "js strings",
-      parentId: 101,
+      parentId: 102,
     },
     {
       title: "File3",
@@ -32,7 +41,8 @@ function App() {
       title: "Folder1",
       id: 101,
       type: "folder",
-      childrenIds: [2, 3],
+      parentId: 100,
+      childrenIds: [102],
     },
     {
       title: "Folder2",
@@ -41,45 +51,14 @@ function App() {
       parentId: 101,
       childrenIds: [2, 3],
     },
-  ];
-  const explorerDataSortedByFolders = [
-    {
-      title: "File1",
-      extension: "css",
-      id: 1,
-      type: "file",
-      value: "css strings",
-    },
-    { title: "File2", extension: "js", id: 2, type: "file" },
-    { title: "File3", extension: "html", id: 3, type: "file" },
-    {
-      title: "Folder1",
-      id: 101,
-      type: "folder",
-      children: [
-        { title: "File7", extension: "css", id: 7, type: "file" },
-        { title: "File8", extension: "js", id: 8, type: "file" },
-      ],
-    },
-    { title: "File4", extension: "js", id: 4, type: "file" },
-    { title: "File5", extension: "html", id: 5, type: "file" },
-    { title: "File6", extension: "css", id: 6, type: "file" },
-    {
-      title: "Folder2",
-      id: 102,
-      type: "folder",
-      children: [
-        { title: "File9", extension: "css", id: 9, type: "file" },
-        { title: "File10", extension: "js", id: 10, type: "file" },
-        { title: "Folder3", id: 103, type: "folder" },
-      ],
-    },
-  ] as Array<ExplorerDataType>;
+  ] as Array<UnsortedDataType>;
 
   return (
     <div className={styles.app}>
-      <Header />
-      <MainComponent explorerData={explorerDataSortedByFolders} />
+      <selectedIdContext.Provider value={{ selectedId, setSelectedId }}>
+        <Header />
+        <MainComponent explorerData={explorerDataUnsorted} />
+      </selectedIdContext.Provider>
     </div>
   );
 }

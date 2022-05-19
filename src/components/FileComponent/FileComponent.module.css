@@ -1,5 +1,6 @@
 .file {
   border: 1px solid blue;
+  user-select: none;
 }
 
 .file__title {

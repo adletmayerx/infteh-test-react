@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./FolderComponent.module.css";
-import { FolderComponentType, ExplorerDataType } from "../../types";
+import { FolderComponentType, UnsortedDataType } from "../../types";
 import FileComponent from "../FileComponent/FileComponent";
 import arrowIcon from "../../img/folder-arrow-icon.svg";
 import arrowIconIsOpen from "../../img/folder-arrow-icon-is-open.svg";
@@ -22,17 +22,19 @@ const FolderComponent = ({
       return;
     }
     setFolders(
-      children?.filter((item: ExplorerDataType) => item.type === "folder")
+      children?.filter((item: UnsortedDataType) => item.type === "folder")
     );
     setFiles(
-      children?.filter((item: ExplorerDataType) => item.type === "file")
+      children?.filter((item: UnsortedDataType) => item.type === "file")
     );
   }, [children]);
 
   const onFolderComponentCLick = (event: any) => {
     event.stopPropagation();
-    setIsOpen(!isOpen);
-    // handleFolderComponentClick(id);
+    if (event.detail === 2) {
+      setIsOpen(!isOpen);
+    }
+    handleFolderComponentClick(id);
   };
 
   return (
@@ -47,20 +49,22 @@ const FolderComponent = ({
       </div>
       {isOpen && (
         <div className={styles["folder__children"]}>
-          {folders.map((folder: ExplorerDataType) => {
+          {folders.map((folder: UnsortedDataType) => {
             return (
               <FolderComponent
                 title={folder.title}
                 id={folder.id}
                 handleFolderComponentClick={handleFolderComponentClick}
+                children={folder.children}
                 key={folder.id}
               />
             );
           })}
-          {files.map((file: ExplorerDataType) => {
+          {files.map((file: UnsortedDataType) => {
             return (
               <FileComponent
                 title={file.title}
+                extension={file.extension}
                 id={file.id}
                 handleFileComponentClick={handleFolderComponentClick}
                 key={file.id}

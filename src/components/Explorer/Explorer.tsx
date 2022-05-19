@@ -1,48 +1,60 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Explorer.module.css";
-import { ExplorerDataType } from "../../types";
+import { UnsortedDataType } from "../../types";
 import FolderComponent from "../FolderComponent/FolderComponent";
 import FileComponent from "../FileComponent/FileComponent";
+import listToTree from "../../utils/list-to-tree";
 
 type ExplorerType = {
-  explorerData: Array<ExplorerDataType>;
+  explorerData: Array<UnsortedDataType>;
+  setSelectedId: (id: number) => void;
 };
 
-const Explorer = ({ explorerData }: ExplorerType) => {
+const Explorer = ({ explorerData, setSelectedId }: ExplorerType) => {
   const [folders, setFolders] = useState([] as any);
   const [files, setFiles] = useState([] as any);
+  const [dataTree, setDataTree] = useState([] as any);
+
+  useEffect(() => {
+    setDataTree(listToTree(explorerData));
+  }, [explorerData]);
+
+  useEffect(() => {
+    console.log(dataTree);
+  }, [dataTree]);
 
   useEffect(() => {
     setFolders(
-      explorerData?.filter((item: ExplorerDataType) => item.type === "folder")
+      dataTree?.filter((item: UnsortedDataType) => item.type === "folder")
     );
     setFiles(
-      explorerData?.filter((item: ExplorerDataType) => item.type === "file")
+      dataTree?.filter((item: UnsortedDataType) => item.type === "file")
     );
-  }, [explorerData]);
+  }, [dataTree]);
 
-  const handleFolderComponentClick = (id: number) => {
-    console.log(id);
+  const handleExplorerItemClick = (id: number) => {
+    setSelectedId(id);
   };
   return (
     <div className={styles.explorer}>
-      {folders.map((folder: ExplorerDataType) => {
+      {folders.map((folder: UnsortedDataType) => {
         return (
           <FolderComponent
             title={folder.title}
             id={folder.id}
-            handleFolderComponentClick={handleFolderComponentClick}
-            children={folder.children }
+            handleFolderComponentClick={handleExplorerItemClick}
+            children={folder.children}
             key={folder.id}
           />
         );
       })}
-      {files.map((file: ExplorerDataType) => {
+      {files.map((file: UnsortedDataType) => {
         return (
           <FileComponent
             title={file.title}
+            extension={file.extension}
             id={file.id}
-            handleFileComponentClick={handleFolderComponentClick}
+            handleFileComponentClick={handleExplorerItemClick}
             key={file.id}
           />
         );

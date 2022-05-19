@@ -3,6 +3,8 @@ type ExplorerDataType = {
   id: number;
   extension?: string;
   type: "file" | "folder";
+  childrenIds?: Array<number>;
+  parentId?: number;
   children?: Array<ExplorerDataType>;
   value?: string;
 };

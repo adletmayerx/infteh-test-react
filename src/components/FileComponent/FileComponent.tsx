@@ -4,6 +4,7 @@ import { FileComponentType } from "../../types";
 
 const FileComponent = ({
   title,
+  extension,
   id,
   handleFileComponentClick,
 }: FileComponentType) => {
@@ -13,7 +14,10 @@ const FileComponent = ({
 
   return (
     <div className={styles.file} onClick={onFileComponentCLick}>
-      <h5 className={styles.file__title}>{title}</h5>
+      <h5 className={styles.file__title}>
+        {title}
+        {extension ? `.${extension}` : ""}
+      </h5>
     </div>
   );
 };
