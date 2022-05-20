@@ -6,6 +6,8 @@ import Explorer from "./Explorer/Explorer";
 import MainComponent from "./MainComponent/MainComponent";
 import FileView from "./FileView/FileView";
 import FolderComponent from "./FolderComponent/FolderComponent";
+import Editor from "./Editor/Editor";
+import PopupRename from "./PopupRename/PopupRename";
 
 export {
   Header,
@@ -16,4 +18,6 @@ export {
   Explorer,
   MainComponent,
   FileView,
+  Editor,
+  PopupRename,
 };

@@ -1,65 +1,39 @@
 import React from "react";
 import styles from "./ToolBar.module.css";
 import { ToolBarButton } from "../index";
+import { ToolBarType } from "../../types";
 
-const buttons = [
-  {
-    id: 1,
-    title: "Создать Папку",
-    handleButtonClick: () => {
-      console.log("click");
-    },
-  },
-  {
-    id: 2,
-    title: "Удалить Папку",
-    handleButtonClick: () => {
-      console.log("click");
-    },
-  },
-  {
-    id: 3,
-    title: "Загрузить файл",
-    handleButtonClick: () => {
-      console.log("click");
-    },
-  },
-  {
-    id: 4,
-    title: "Скачать файл",
-    handleButtonClick: () => {
-      console.log("click");
-    },
-  },
-  {
-    id: 5,
-    title: "Удалить файл",
-    handleButtonClick: () => {
-      console.log("click");
-    },
-  },
-  {
-    id: 6,
-    title: "Переименовать",
-    handleButtonClick: () => {
-      console.log("click");
-    },
-  },
-];
-
-const ToolBar = () => {
+const ToolBar = ({
+  handleRenameButtonClick,
+  handleDeleteFolderButtonClick,
+  handleDeleteFileButtonClick,
+}: ToolBarType) => {
   return (
     <ul className={styles["tool-bar"]}>
-      {buttons.map((button) => {
-        return (
-          <li key={button.id} className={styles["tool-bar__item"]}>
-            <ToolBarButton
-              title={button.title}
-              handleButtonClick={button.handleButtonClick}
-            />
-          </li>
-        );
-      })}
+      <ToolBarButton
+        title={"Создать Папку"}
+        handleButtonClick={handleRenameButtonClick}
+      />
+      <ToolBarButton
+        title={"Удалить Папку"}
+        handleButtonClick={handleDeleteFolderButtonClick}
+      />
+      <ToolBarButton
+        title={"Загрузить файл"}
+        handleButtonClick={handleRenameButtonClick}
+      />
+      <ToolBarButton
+        title={"Скачать файл"}
+        handleButtonClick={handleRenameButtonClick}
+      />
+      <ToolBarButton
+        title={"Удалить файл"}
+        handleButtonClick={handleDeleteFileButtonClick}
+      />
+      <ToolBarButton
+        title={"Переименовать"}
+        handleButtonClick={handleRenameButtonClick}
+      />
     </ul>
   );
 };

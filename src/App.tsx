@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import styles from "./App.module.css";
-import { Header, MainComponent } from "./components";
+import { Header, MainComponent, PopupRename } from "./components";
 import { UnsortedDataType } from "./types";
 import selectedIdContext from "./contexts/selected-id-context";
 
-
 function App() {
-  const [selectedId, setSelectedId] = useState(null);
-  const explorerDataUnsorted = [
+  let explorerDataUnsorted = [
     {
       title: "Folder0",
       id: 100,
@@ -53,11 +51,92 @@ function App() {
     },
   ] as Array<UnsortedDataType>;
 
+  const [array, setArray] = useState(explorerDataUnsorted);
+
+  const [selectedId, setSelectedId] = useState(null);
+  const [selectedExplorerDataItem, setSelectedExplorerDataItem] = useState(
+    null
+  ) as any;
+  const [popupRenameIsOpen, setPopupRenameIsOpen] = useState(false);
+
+  const closeAllPopups = () => {
+    setPopupRenameIsOpen(false);
+  };
+
+  useEffect(() => {
+    if (!selectedId) {
+      return;
+    }
+    setSelectedExplorerDataItem(array.find((item) => item.id === selectedId));
+  }, [array, selectedId]);
+
+  const handleRenameButtonClick = () => {
+    if (!selectedExplorerDataItem) {
+      return;
+    }
+    setPopupRenameIsOpen(true);
+  };
+
+  const handleDeleteFolderButtonClick = () => {
+    if (selectedExplorerDataItem.type === "file") {
+      return;
+    }
+    setArray(array.filter((item) => item.id !== selectedId));
+  };
+
+  const handleDeleteFileButtonClick = () => {
+    if (selectedExplorerDataItem.type === "folder") {
+      return;
+    }
+    setArray(array.filter((item) => item.id !== selectedId));
+  };
+
+  const handleRenamePopupFormSubmit = (newName: string) => {
+    if (selectedExplorerDataItem.type === "file") {
+      const [name, extension] = newName.split(".");
+      setArray(
+        array.map((item) =>
+          item.id === selectedId
+            ? { ...item, title: name, extension: extension }
+            : item
+        )
+      );
+    } else {
+      setArray(
+        array.map((item) => {
+          if (item.id === selectedId) {
+            return { ...item, title: newName };
+          } else {
+            return item;
+          }
+        })
+      );
+    }
+    closeAllPopups();
+  };
+
   return (
     <div className={styles.app}>
       <selectedIdContext.Provider value={{ selectedId, setSelectedId }}>
-        <Header />
-        <MainComponent explorerData={explorerDataUnsorted} />
+        <Header
+          handleRenameButtonClick={handleRenameButtonClick}
+          handleDeleteFolderButtonClick={handleDeleteFolderButtonClick}
+          handleDeleteFileButtonClick={handleDeleteFileButtonClick}
+        />
+        <MainComponent explorerData={array} />
+        {selectedExplorerDataItem && (
+          <PopupRename
+            handleSubmit={handleRenamePopupFormSubmit}
+            isOpen={popupRenameIsOpen}
+            onClose={closeAllPopups}
+            onOverlayClick={closeAllPopups}
+            initialInputValue={`${selectedExplorerDataItem.title}${
+              selectedExplorerDataItem.extension
+                ? `.${selectedExplorerDataItem.extension}`
+                : ""
+            }`}
+          />
+        )}
       </selectedIdContext.Provider>
     </div>
   );

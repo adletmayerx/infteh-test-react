@@ -20,10 +20,6 @@ const Explorer = ({ explorerData, setSelectedId }: ExplorerType) => {
   }, [explorerData]);
 
   useEffect(() => {
-    console.log(dataTree);
-  }, [dataTree]);
-
-  useEffect(() => {
     setFolders(
       dataTree?.filter((item: UnsortedDataType) => item.type === "folder")
     );

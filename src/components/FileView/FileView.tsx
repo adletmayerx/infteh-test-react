@@ -1,10 +1,13 @@
 import React from "react";
 import styles from "./FileView.module.css";
+import { Editor } from "../";
 
 const FileView = () => {
   return (
     <div className={styles["file-view"]}>
-      <h1>FileView</h1>
+      <h1>
+        <Editor />
+      </h1>
     </div>
   );
 };

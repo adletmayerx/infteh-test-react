@@ -1,11 +1,20 @@
 import React from "react";
 import styles from "./Header.module.css";
 import { ToolBar } from "../index";
+import { HeaderType } from "../../types";
 
-const Header = () => {
+const Header = ({
+  handleRenameButtonClick,
+  handleDeleteFolderButtonClick,
+  handleDeleteFileButtonClick,
+}: HeaderType) => {
   return (
     <header className={styles.header}>
-      <ToolBar />
+      <ToolBar
+        handleRenameButtonClick={handleRenameButtonClick}
+        handleDeleteFolderButtonClick={handleDeleteFolderButtonClick}
+        handleDeleteFileButtonClick={handleDeleteFileButtonClick}
+      />
     </header>
   );
 };

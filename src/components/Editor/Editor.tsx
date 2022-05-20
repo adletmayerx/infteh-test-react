@@ -1,48 +1,26 @@
-import React, { useState } from 'react'
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/theme/material.css'
-import 'codemirror/mode/xml/xml'
-import 'codemirror/mode/javascript/javascript'
-import 'codemirror/mode/css/css'
-import { Controlled as ControlledEditor } from 'react-codemirror2'
+import CodeMirror from "@uiw/react-codemirror";
+import { StreamLanguage } from "@codemirror/language";
+import { javascript } from "@codemirror/lang-javascript";
+import { html } from "@codemirror/lang-html";
+import { css } from "@codemirror/lang-css";
+import { editorLanguages } from "../../utils/constants";
 
-export default function Editor(props) {
-  const {
-    language,
-    displayName,
-    value,
-    onChange
-  } = props
-  const [open, setOpen] = useState(true)
+const value = `
+  const a = 111;
+  const b = 2222;
+  `;
 
-  function handleChange(editor, data, value) {
-    onChange(value)
-  }
-
+const Editor = () => {
   return (
-    <div className={`editor-container ${open ? '' : 'collapsed'}`}>
-      <div className="editor-title">
-        {displayName}
-        <button
-          type="button"
-          className="expand-collapse-btn"
-          onClick={() => setOpen(prevOpen => !prevOpen)}
-        >
-          <FontAwesomeIcon icon={open ? faCompressAlt : faExpandAlt} />
-        </button>
-      </div>
-      <ControlledEditor
-        onBeforeChange={handleChange}
-        value={value}
-        className="code-mirror-wrapper"
-        options={{
-          lineWrapping: true,
-          lint: true,
-          mode: language,
-          theme: 'material',
-          lineNumbers: true
-        }}
-      />
-    </div>
-  )
-}
+    <CodeMirror
+      value={value}
+      height="100%"
+      extensions={[javascript({ jsx: true })]}
+      onChange={(value, viewUpdate) => {
+        console.log("value:", value);
+      }}
+    />
+  );
+};
+
+export default Editor;
