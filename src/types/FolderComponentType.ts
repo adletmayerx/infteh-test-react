@@ -7,6 +7,8 @@ type FolderComponentType = {
   handleFileDoubleClick: () => void;
   children?: Array<ExplorerDataType>;
   selectedId: number;
+  handleFolderRightClick: (e: MouseEvent) => void;
+  handleFileRightClick: (e: MouseEvent) => void;
 };
 
 export default FolderComponentType;

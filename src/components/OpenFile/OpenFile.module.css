@@ -1,0 +1,46 @@
+.open-file {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+  align-items: center;
+  border: 3px solid lightblue;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 3px;
+  color: lightgrey;
+  cursor: pointer;
+}
+
+.open-file__title {
+  padding: 0;
+  margin: 0;
+  max-width: 100px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.open-file__title_is_active {
+  color: black;
+}
+
+.open-file__close-button {
+  background-image: url(../../images/close-button.svg);
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 15px;
+  height: 15px;
+  transition: opacity 0.3s ease-in;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+.open-file__close-button:hover {
+  opacity: 0.7;
+}

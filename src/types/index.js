@@ -6,8 +6,11 @@ import ToolBarType from "./ToolBarType";
 import HeaderType from "./HeaderType";
 import MainComponentType from "./MainComponentType";
 import PopupCreateFolderType from "./PopupCreateFolderType";
+import PopupCreateFileType from "./PopupCreateFileType";
 import PopupRenameType from "./PopupRenameType";
 import EditorType from "./EditorType";
+import OpenFileType from "./OpenFileType";
+import AnchorPointType from "./AnchorPointType";
 
 export {
   FolderComponentType,
@@ -18,6 +21,9 @@ export {
   HeaderType,
   MainComponentType,
   PopupCreateFolderType,
+  PopupCreateFileType,
   PopupRenameType,
   EditorType,
+  OpenFileType,
+  AnchorPointType
 };

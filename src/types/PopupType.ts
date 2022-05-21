@@ -7,7 +7,6 @@ type PopupType = {
   modifier?: string;
   onClose: () => void;
   className?: string;
-  onOverlayClick: () => void;
 };
 
 export default PopupType;

@@ -3,6 +3,7 @@ type ToolBarType = {
   handleDeleteFolderButtonClick: () => void;
   handleDeleteFileButtonClick: () => void;
   handleCreateFolderButtonClick: () => void;
+  handleCreateFileButtonClick: () => void;
 };
 
 export default ToolBarType;

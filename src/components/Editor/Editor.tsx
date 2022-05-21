@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { editorLanguages } from "../../utils/constants";
-import { ExplorerDataType, EditorType } from "../../types";
+import { EditorType, ExplorerDataType } from "../../types";
+import styles from "./Editor.module.css";
 
-const Editor = ({ activeFile }: EditorType) => {
-  const [value, setValue] = useState("");
+const Editor = ({ activeFile, setActiveFile }: EditorType) => {
   const [language, setLanguage] = useState(null) as any;
   const [extension, setExtension] = useState([]) as any;
 
@@ -12,7 +12,6 @@ const Editor = ({ activeFile }: EditorType) => {
     if (!activeFile) {
       return;
     }
-    setValue(activeFile.value ? activeFile.value : "");
     setLanguage(
       activeFile.extension ? editorLanguages[activeFile.extension] : undefined
     );
@@ -22,19 +21,24 @@ const Editor = ({ activeFile }: EditorType) => {
     setExtension(language ? [language] : []);
   }, [language]);
 
-  useEffect(() => {
-    console.log(extension);
-  }, [extension]);
+  const handleChange = (value: string) => {
+    setActiveFile((activeFile: ExplorerDataType) => ({
+      ...activeFile,
+      value: value,
+    }));
+  };
 
   return (
-    <CodeMirror
-      value={value}
-      height="100%"
-      extensions={extension}
-      onChange={(value, viewUpdate) => {
-        console.log("value:", value);
-      }}
-    />
+    <div className={styles.editor}>
+      <CodeMirror
+        value={activeFile.value ? activeFile.value : ""}
+        height="100%"
+        extensions={extension}
+        onChange={(value) => {
+          handleChange(value);
+        }}
+      />
+    </div>
   );
 };
 

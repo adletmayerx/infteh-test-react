@@ -9,7 +9,6 @@ const Popup = ({
   onClose,
   isOpen,
   className,
-  onOverlayClick,
 }: PopupType) => {
   return (
     <div
@@ -19,13 +18,8 @@ const Popup = ({
         className
       )}
     >
-      <div className={styles.popup__overlay} onClick={onOverlayClick}></div>
+      <div className={styles.popup__overlay} onClick={onClose}></div>
       <div className={styles.popup__content}>
-        <button
-          className={styles.popup__home}
-          onClick={onClose}
-          type="button"
-        />
         <button
           className={styles.popup__close}
           type="button"

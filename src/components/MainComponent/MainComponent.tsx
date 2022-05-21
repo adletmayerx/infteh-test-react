@@ -7,7 +7,13 @@ import { MainComponentType } from "../../types";
 const MainComponent = ({
   explorerData,
   handleFileDoubleClick,
-  activeFile
+  openFiles,
+  activeFile,
+  setActiveFile,
+  handleOpenFileClick,
+  handleOpenFileCloseButtonClick,
+  handleFolderRightClick,
+  handleFileRightClick,
 }: MainComponentType) => {
   const { selectedId, setSelectedId } = useContext(selectedIdContext);
 
@@ -18,8 +24,17 @@ const MainComponent = ({
         setSelectedId={setSelectedId}
         selectedId={selectedId ? selectedId : -1}
         handleFileDoubleClick={handleFileDoubleClick}
+        handleFolderRightClick={handleFolderRightClick}
+        handleFileRightClick={handleFileRightClick}
       />
-      <FileView activeFile={activeFile} />
+      <FileView
+        activeFile={activeFile}
+        setActiveFile={setActiveFile}
+        openFiles={openFiles}
+        handleOpenFileClick={handleOpenFileClick}
+        handleOpenFileCloseButtonClick={handleOpenFileCloseButtonClick}
+        handleFileRightClick={handleFileRightClick}
+      />
     </main>
   );
 };

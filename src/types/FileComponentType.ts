@@ -5,6 +5,7 @@ type FileComponentType = {
   handleFileComponentClick: (id: number) => void;
   selectedId: number;
   handleFileDoubleClick: () => void;
+  handleFileRightClick: (e: MouseEvent) => void;
 };
 
 export default FileComponentType;

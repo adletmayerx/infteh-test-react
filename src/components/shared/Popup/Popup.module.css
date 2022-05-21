@@ -31,20 +31,18 @@
 }
 
 /* модификатор для моб.попапа с верхним прикреплением */
-.popup_float_top {
-  align-items: flex-start;
-}
 
 .popup__content {
   position: relative;
   display: flex;
-  overflow: hidden;
+  max-width: 614px;
+  max-height: 632px;
   width: 100%;
   box-sizing: border-box;
   flex-direction: column;
   padding: 20px;
   background-color: #fff;
-  border-radius: 24px 24px 0 0;
+  border-radius: 24px;
   color: var(--color-main-text);
   font-family: "TT Firs Neue", Arial, sans-serif;
   -webkit-overflow-scrolling: touch;
@@ -53,26 +51,25 @@
 
 .popup__title {
   width: 100%;
-  max-width: 288px;
   margin: 16px 0;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 500;
-  line-height: 18px;
+  line-height: 24px;
 }
 
 .popup__close {
   position: absolute;
-  top: 44px;
+  top: 20px;
   right: 20px;
-  width: 20px;
-  height: 20px;
+  width: 35px;
+  height: 35px;
   padding: 0;
   border: 0;
   background-color: transparent;
-  /* background-image: url(../../../icons/close-popup-button-small.svg); */
+  background-image: url(../../../images/close-button.svg);
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 30px 30px;
 }
 
 .popup__close:hover {
@@ -81,49 +78,10 @@
   transition: opacity 0.5s ease-in-out;
 }
 
-@media screen and (min-width: 550px) {
-  .popup__content {
-    border-radius: 24px;
-  }
-  .popup__content::-webkit-scrollbar {
-    width: 4px;
-  }
-  .popup__content::-webkit-scrollbar-track {
-    margin: 20px 0;
-    background-color: lightgrey;
-    border-radius: 100px;
-  }
-  .popup__content::-webkit-scrollbar-thumb {
-    background-color: grey;
-    border-radius: 100px;
-  }
-  .popup__home {
-    display: none;
-  }
-  /* .popup__close {
-    background-image: url(../../../icons/close-popup-button-large.svg);
-  } */
-}
-
 @media screen and (min-width: 767px) {
-  .popup {
-    align-items: center;
-  }
-
   .popup__content {
     max-width: 614px;
     max-height: 632px;
     padding: 40px;
-  }
-  .popup__close {
-    top: 66px;
-    right: 40px;
-    width: 24px;
-    height: 24px;
-  }
-  .popup__title {
-    max-width: 496px;
-    font-size: 48px;
-    line-height: 52px;
   }
 }

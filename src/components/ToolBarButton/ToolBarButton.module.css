@@ -1,9 +1,10 @@
 .button {
   border: none;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .button:hover {
-  background-color: #555;
+  background-color: lightblue;
   color: #fff;
 }

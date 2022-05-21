@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Popup from "../shared/Popup/Popup";
-import { PopupRenameType } from "../../types";
-import styles from "./PopupRename.module.css";
+import { PopupCreateFileType } from "../../types";
+import styles from "./PopupCreateFile.module.css";
 import cn from "classnames/bind";
 
-const PopupRename = ({
+const PopupCreateFile = ({
   handleSubmit,
   isOpen,
   onClose,
-  selectedExplorerDataItem,
-}: PopupRenameType) => {
+}: PopupCreateFileType) => {
   const [value, setValue] = useState("");
   const [placeholderValue, setPlaceHolderValue] = useState("");
   const [isValid, setIsValid] = useState(true);
@@ -25,39 +24,22 @@ const PopupRename = ({
   };
 
   useEffect(() => {
-    if (!selectedExplorerDataItem) {
-      return;
-    }
-    if (selectedExplorerDataItem.type === "file") {
-      setValue(
-        `${selectedExplorerDataItem.title}.${selectedExplorerDataItem.extension}`
-      );
-      setPlaceHolderValue("название_файла.расширение_файла");
-    } else {
-      setValue(selectedExplorerDataItem.title);
-      setPlaceHolderValue("название_папки");
-    }
-  }, [selectedExplorerDataItem, isOpen]);
+    setPlaceHolderValue("название_файла.расширение_файла");
+  }, [isOpen]);
 
   useEffect(() => {
-    if (value === "") {
-      setIsValid(false);
-      setError("введите название");
-    } else if (
-      (selectedExplorerDataItem.type === "file" && !value.includes(".")) ||
-      value.split(".")[1] === ""
-    ) {
+    if (!value.includes(".") || value.split(".")[1] === "") {
       setIsValid(false);
       setError("введите расширение файла");
     } else {
       setIsValid(true);
       setError("");
     }
-  }, [selectedExplorerDataItem.type, value]);
+  }, [value]);
 
   return (
     <div>
-      <Popup isOpen={isOpen} title={"Переименовать"} onClose={onClose}>
+      <Popup isOpen={isOpen} title={"Создать файл"} onClose={onClose}>
         <form className={styles["popup-form"]} onSubmit={onSubmit}>
           <input
             className={styles["popup-form__input"]}
@@ -85,4 +67,4 @@ const PopupRename = ({
   );
 };
 
-export default PopupRename;
+export default PopupCreateFile;

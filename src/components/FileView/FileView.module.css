@@ -2,5 +2,26 @@
   flex-grow: 1;
   background: #fefefe;
   border-radius: 10px;
-  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.file-view__no-active-files-banner {
+  text-align: center;
+}
+
+.file-view__open-files-list {
+  display: flex;
+  justify-content: flex-start;
+  list-style-type: none;
+  margin: 0;
+  padding: 0 10px;
+  gap: 5px;
+  border-bottom: 5px solid lightblue;
+}
+
+.file-view__open-files-list-item {
+  margin: 0;
+  padding: 0;
 }

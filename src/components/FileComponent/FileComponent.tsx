@@ -10,6 +10,7 @@ const FileComponent = ({
   handleFileComponentClick,
   selectedId,
   handleFileDoubleClick,
+  handleFileRightClick,
 }: FileComponentType) => {
   const onFileComponentCLick = (e: any) => {
     e.stopPropagation();
@@ -19,12 +20,18 @@ const FileComponent = ({
     handleFileComponentClick(id);
   };
 
+  const onFileComponentRightClick = (e: any) => {
+    handleFileComponentClick(id);
+    handleFileRightClick(e);
+  };
+
   return (
     <div
       className={cn(styles["file"], {
         [styles["file_is_selected"]]: id === selectedId,
       })}
       onClick={onFileComponentCLick}
+      onContextMenu={onFileComponentRightClick}
     >
       <h5 className={styles.file__title}>
         {title}

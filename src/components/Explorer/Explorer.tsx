@@ -10,6 +10,8 @@ type ExplorerType = {
   setSelectedId: (id: number) => void;
   selectedId: number;
   handleFileDoubleClick: () => void;
+  handleFolderRightClick: (e: MouseEvent) => void;
+  handleFileRightClick: (e: MouseEvent) => void;
 };
 
 const Explorer = ({
@@ -17,6 +19,8 @@ const Explorer = ({
   setSelectedId,
   selectedId,
   handleFileDoubleClick,
+  handleFolderRightClick,
+  handleFileRightClick,
 }: ExplorerType) => {
   const [folders, setFolders] = useState([] as any);
   const [files, setFiles] = useState([] as any);
@@ -46,6 +50,8 @@ const Explorer = ({
             title={folder.title}
             id={folder.id}
             handleFolderComponentClick={handleExplorerItemClick}
+            handleFolderRightClick={handleFolderRightClick}
+            handleFileRightClick={handleFileRightClick}
             handleFileDoubleClick={handleFileDoubleClick}
             children={folder.children}
             selectedId={selectedId}
@@ -60,6 +66,7 @@ const Explorer = ({
             extension={file.extension}
             id={file.id}
             handleFileComponentClick={handleExplorerItemClick}
+            handleFileRightClick={handleFileRightClick}
             handleFileDoubleClick={handleFileDoubleClick}
             selectedId={selectedId}
             key={file.id}

@@ -8,17 +8,11 @@ const PopupCreateFolder = ({
   handleSubmit,
   isOpen,
   onClose,
-  onOverlayClick,
-  }: PopupCreateFolderType) => {
+}: PopupCreateFolderType) => {
   const [value, setValue] = useState("");
   const [placeholderValue, setPlaceHolderValue] = useState("");
   const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState("");
-
-  const handleClose = () => {
-    onClose();
-    onOverlayClick();
-  };
 
   const handleChange = (e: { target: HTMLInputElement }) => {
     setValue(e.target.value);
@@ -45,12 +39,7 @@ const PopupCreateFolder = ({
 
   return (
     <div>
-      <Popup
-        isOpen={isOpen}
-        title={"Создать Папку"}
-        onClose={handleClose}
-        onOverlayClick={handleClose}
-      >
+      <Popup isOpen={isOpen} title={"Создать Папку"} onClose={onClose}>
         <form className={styles["popup-form"]} onSubmit={onSubmit}>
           <input
             className={styles["popup-form__input"]}

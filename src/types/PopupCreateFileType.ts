@@ -1,7 +1,7 @@
-type PopupCreateFolderType = {
+type PopupCreateFileType = {
   onClose: () => void;
   isOpen: boolean;
   handleSubmit: (name: string) => void;
 };
 
-export default PopupCreateFolderType;
+export default PopupCreateFileType;

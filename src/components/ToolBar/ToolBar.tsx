@@ -7,38 +7,58 @@ const ToolBar = ({
   handleRenameButtonClick,
   handleDeleteFolderButtonClick,
   handleDeleteFileButtonClick,
-  handleCreateFolderButtonClick
+  handleCreateFolderButtonClick,
+  handleCreateFileButtonClick,
 }: ToolBarType) => {
   const handleNotImplentedButtonFunctionalityClick = () => {
     alert("функциональность не имплементирована :С");
   };
-  
+
   return (
     <ul className={styles["tool-bar"]}>
-      <ToolBarButton
-        title={"Создать Папку"}
-        handleButtonClick={handleCreateFolderButtonClick}
-      />
-      <ToolBarButton
-        title={"Удалить Папку"}
-        handleButtonClick={handleDeleteFolderButtonClick}
-      />
-      <ToolBarButton
-        title={"Загрузить файл"}
-        handleButtonClick={handleNotImplentedButtonFunctionalityClick}
-      />
-      <ToolBarButton
-        title={"Скачать файл"}
-        handleButtonClick={handleNotImplentedButtonFunctionalityClick}
-      />
-      <ToolBarButton
-        title={"Удалить файл"}
-        handleButtonClick={handleDeleteFileButtonClick}
-      />
-      <ToolBarButton
-        title={"Переименовать"}
-        handleButtonClick={handleRenameButtonClick}
-      />
+      <li className={styles["tool-bar__item"]}>
+        <ToolBarButton
+          title={"Создать папку"}
+          handleButtonClick={handleCreateFolderButtonClick}
+        />
+      </li>
+      <li className={styles["tool-bar__item"]}>
+        <ToolBarButton
+          title={"Создать файл"}
+          handleButtonClick={handleCreateFileButtonClick}
+        />
+      </li>
+      <li className={styles["tool-bar__item"]}>
+        <ToolBarButton
+          title={"Удалить папку"}
+          handleButtonClick={handleDeleteFolderButtonClick}
+        />
+      </li>
+
+      <li className={styles["tool-bar__item"]}>
+        <ToolBarButton
+          title={"Удалить файл"}
+          handleButtonClick={handleDeleteFileButtonClick}
+        />
+      </li>
+      <li className={styles["tool-bar__item"]}>
+        <ToolBarButton
+          title={"Переименовать"}
+          handleButtonClick={handleRenameButtonClick}
+        />
+      </li>
+      <li className={styles["tool-bar__item"]}>
+        <ToolBarButton
+          title={"Загрузить файл"}
+          handleButtonClick={handleNotImplentedButtonFunctionalityClick}
+        />
+      </li>
+      <li className={styles["tool-bar__item"]}>
+        <ToolBarButton
+          title={"Скачать файл"}
+          handleButtonClick={handleNotImplentedButtonFunctionalityClick}
+        />
+      </li>
     </ul>
   );
 };

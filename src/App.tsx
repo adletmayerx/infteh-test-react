@@ -5,104 +5,37 @@ import {
   MainComponent,
   PopupRename,
   PopupCreateFolder,
+  PopupSaveFile,
+  PopupCreateFile,
+  FolderContextMenu,
+  FileContextMenu,
 } from "./components";
 import { ExplorerDataType } from "./types";
 import selectedIdContext from "./contexts/selected-id-context";
 import Folder from "./utils/FolderClass";
+import File from "./utils/FileClass";
+import { explorerDataUnsorted } from "./utils/constants";
 
 function App() {
-  let explorerDataUnsorted = [
-    {
-      title: "Folder0",
-      id: 100,
-      type: "folder",
-      childrenIds: [101],
-    },
-    {
-      title: "File1",
-      extension: "css",
-      id: 1,
-      type: "file",
-      value: "css strings",
-    },
-    {
-      title: "File2",
-      extension: "js",
-      id: 2,
-      type: "file",
-      value: "js strings",
-      parentId: 102,
-    },
-    {
-      title: "File3",
-      extension: "html",
-      id: 3,
-      type: "file",
-      value: "html strings",
-      parentId: 102,
-    },
-    {
-      title: "Folder1",
-      id: 101,
-      type: "folder",
-      parentId: 100,
-      childrenIds: [102],
-    },
-    {
-      title: "Folder2",
-      id: 102,
-      type: "folder",
-      parentId: 101,
-      childrenIds: [2, 3],
-    },
-  ] as Array<ExplorerDataType>;
-
   const [array, setArray] = useState(explorerDataUnsorted);
 
   const [selectedId, setSelectedId] = useState(null);
   const [selectedExplorerDataItem, setSelectedExplorerDataItem] = useState(
     null
   ) as any;
+
   const [popupRenameIsOpen, setPopupRenameIsOpen] = useState(false);
   const [popupCreateFolderIsOpen, setPopupCreateFolderIsOpen] = useState(false);
+  const [popupCreateFileIsOpen, setPopupCreateFileIsOpen] = useState(false);
+  const [popupSaveFileIsOpen, setPopupSaveFileIsOpen] = useState(false);
+
+  const [folderContextMenuIsOpen, setFolderContextMenuIsOpen] = useState(false);
+  const [fileContextMenuIsOpen, setFileContextMenuIsOpen] = useState(false);
+
+  const [anchorPoint, setAnchorPoint] = useState(null) as any;
 
   const [openFiles, setOpenFiles] = useState([]) as any;
-  const [activeFile, setActiveFile] = useState() as any;
-
-  const handleFileDoubleClick = () => {
-    setOpenFiles([...openFiles, selectedExplorerDataItem]);
-  };
-
-  useEffect(() => {
-    setActiveFile(openFiles[openFiles.length - 1]);
-  }, [openFiles]);
-
-  useEffect(() => {
-    console.log(activeFile);
-  }, [activeFile]);
-
-  const closeAllPopups = () => {
-    setPopupRenameIsOpen(false);
-    setPopupCreateFolderIsOpen(false);
-  };
-
-  useEffect(() => {
-    if (!selectedId) {
-      return;
-    }
-    setSelectedExplorerDataItem(array.find((item) => item.id === selectedId));
-  }, [array, selectedId]);
-
-  const handleRenameButtonClick = () => {
-    if (!selectedExplorerDataItem) {
-      return;
-    }
-    setPopupRenameIsOpen(true);
-  };
-
-  const handleCreateFolderButtonClick = () => {
-    setPopupCreateFolderIsOpen(true);
-  };
+  const [activeFile, setActiveFile] = useState(null) as any;
 
   const handleDeleteFolderButtonClick = () => {
     if (selectedExplorerDataItem.type === "file") {
@@ -116,6 +49,72 @@ function App() {
       return;
     }
     setArray(array.filter((item) => item.id !== selectedId));
+  };
+
+  const handleFileDoubleClick = () => {
+    if (openFiles.includes(selectedExplorerDataItem)) {
+      return;
+    }
+    setOpenFiles([...openFiles, selectedExplorerDataItem]);
+  };
+
+  const handleFolderRightClick = (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setAnchorPoint({ x: e.pageX, y: e.pageY });
+    setFileContextMenuIsOpen(false);
+    setFolderContextMenuIsOpen(true);
+  };
+
+  const handleFileRightClick = (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setAnchorPoint({ x: e.pageX, y: e.pageY });
+    setFolderContextMenuIsOpen(false);
+    setFileContextMenuIsOpen(true);
+  };
+
+  const handleOpenFileClick = (id: number) => {
+    if (id === activeFile) {
+      return;
+    }
+    setActiveFile(openFiles.find((file: ExplorerDataType) => file.id === id));
+  };
+
+  const handleRenameButtonClick = () => {
+    if (!selectedExplorerDataItem) {
+      return;
+    }
+    setPopupRenameIsOpen(true);
+  };
+
+  const handleCreateFolderButtonClick = () => {
+    setPopupCreateFolderIsOpen(true);
+  };
+
+  const handleCreateFileButtonClick = () => {
+    setPopupCreateFileIsOpen(true);
+  };
+
+  const handleOpenFileCloseButtonClick = () => {
+    if (
+      array.find((item) => item.id === activeFile.id)?.value ===
+      activeFile.value
+    ) {
+      setOpenFiles(
+        openFiles.filter((file: ExplorerDataType) => file.id !== activeFile.id)
+      );
+      return;
+    }
+
+    setPopupSaveFileIsOpen(true);
+  };
+
+  const closeAllPopups = () => {
+    setPopupRenameIsOpen(false);
+    setPopupCreateFolderIsOpen(false);
+    setPopupCreateFileIsOpen(false);
+    setPopupSaveFileIsOpen(false);
   };
 
   const handleRenamePopupFormSubmit = (newName: string) => {
@@ -151,12 +150,93 @@ function App() {
       const newFolder = new Folder(title);
       setArray([...array, newFolder]);
     } else {
-      const newFolder = new Folder(title, selectedId);
+      const parentId =
+        selectedExplorerDataItem.type === "file"
+          ? selectedExplorerDataItem.parentId
+          : selectedExplorerDataItem.id;
+
+      const newFolder = new Folder(title, parentId);
       setArray([...array, newFolder]);
     }
     closeAllPopups();
   };
 
+  const handlPopupCreateFileSubmit = (title: string) => {
+    if (!selectedId) {
+      const newFile = new File(title);
+      setArray([...array, newFile]);
+    } else {
+      const parentId =
+        selectedExplorerDataItem.type === "file"
+          ? selectedExplorerDataItem.parentId
+          : selectedExplorerDataItem.id;
+
+      const newFile = new File(title, parentId);
+      setArray([...array, newFile]);
+      setOpenFiles([...openFiles, newFile]);
+    }
+    closeAllPopups();
+  };
+
+  const handlePopupSaveFileSubmit = () => {
+    setArray(
+      array.map((item: ExplorerDataType) =>
+        item.id === activeFile.id
+          ? { ...item, value: activeFile.value.toString() }
+          : item
+      )
+    );
+
+    setOpenFiles(
+      openFiles.filter((file: ExplorerDataType) => file.id !== activeFile.id)
+    );
+
+    closeAllPopups();
+  };
+
+  const handlePopupSaveFileSubmitNoButtonClick = () => {
+    setOpenFiles(
+      openFiles.filter((file: ExplorerDataType) => file.id !== activeFile.id)
+    );
+
+    closeAllPopups();
+  };
+
+  useEffect(() => {
+    if (!selectedId) {
+      return;
+    }
+    setSelectedExplorerDataItem(array.find((item) => item.id === selectedId));
+  }, [array, selectedId]);
+
+  useEffect(() => {
+    setActiveFile(openFiles[openFiles.length - 1]);
+  }, [openFiles]);
+
+  const closeAllContextMenus = () => {
+    setFolderContextMenuIsOpen(false);
+    setFileContextMenuIsOpen(false);
+  };
+
+  useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => {
+      closeAllContextMenus();
+    };
+
+    const handleClick = () => {
+      setFolderContextMenuIsOpen(false);
+      setFileContextMenuIsOpen(false);
+      setSelectedId(null);
+    };
+
+    document.addEventListener("contextmenu", handleContextMenu);
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
   return (
     <div className={styles.app}>
       <selectedIdContext.Provider value={{ selectedId, setSelectedId }}>
@@ -165,12 +245,19 @@ function App() {
           handleDeleteFolderButtonClick={handleDeleteFolderButtonClick}
           handleDeleteFileButtonClick={handleDeleteFileButtonClick}
           handleCreateFolderButtonClick={handleCreateFolderButtonClick}
+          handleCreateFileButtonClick={handleCreateFileButtonClick}
         />
 
         <MainComponent
           explorerData={array}
           handleFileDoubleClick={handleFileDoubleClick}
+          openFiles={openFiles}
           activeFile={activeFile}
+          setActiveFile={setActiveFile}
+          handleOpenFileClick={handleOpenFileClick}
+          handleOpenFileCloseButtonClick={handleOpenFileCloseButtonClick}
+          handleFolderRightClick={handleFolderRightClick}
+          handleFileRightClick={handleFileRightClick}
         />
 
         {selectedExplorerDataItem && (
@@ -178,7 +265,6 @@ function App() {
             handleSubmit={handleRenamePopupFormSubmit}
             isOpen={popupRenameIsOpen}
             onClose={closeAllPopups}
-            onOverlayClick={closeAllPopups}
             selectedExplorerDataItem={selectedExplorerDataItem}
           />
         )}
@@ -187,7 +273,36 @@ function App() {
           handleSubmit={handlPopupCreateFolderSubmit}
           isOpen={popupCreateFolderIsOpen}
           onClose={closeAllPopups}
-          onOverlayClick={closeAllPopups}
+        />
+
+        <PopupCreateFile
+          handleSubmit={handlPopupCreateFileSubmit}
+          isOpen={popupCreateFileIsOpen}
+          onClose={closeAllPopups}
+        />
+
+        <PopupSaveFile
+          handleSubmit={handlePopupSaveFileSubmit}
+          isOpen={popupSaveFileIsOpen}
+          onClose={closeAllPopups}
+          onNoButtonClick={handlePopupSaveFileSubmitNoButtonClick}
+        />
+
+        <FolderContextMenu
+          isOpen={folderContextMenuIsOpen}
+          anchorPoint={anchorPoint}
+          handleRenameButtonClick={handleRenameButtonClick}
+          handleDeleteFolderButtonClick={handleDeleteFolderButtonClick}
+          handleCreateFolderButtonClick={handleCreateFolderButtonClick}
+          handleCreateFileButtonClick={handleCreateFileButtonClick}
+        />
+
+        <FileContextMenu
+          isOpen={fileContextMenuIsOpen}
+          anchorPoint={anchorPoint}
+          handleRenameButtonClick={handleRenameButtonClick}
+          handleDeleteFileButtonClick={handleDeleteFileButtonClick}
+          closeAllContextMenus={closeAllContextMenus}
         />
       </selectedIdContext.Provider>
     </div>

@@ -7,7 +7,8 @@ const Header = ({
   handleRenameButtonClick,
   handleDeleteFolderButtonClick,
   handleDeleteFileButtonClick,
-  handleCreateFolderButtonClick
+  handleCreateFolderButtonClick,
+  handleCreateFileButtonClick
 }: HeaderType) => {
   return (
     <header className={styles.header}>
@@ -16,6 +17,7 @@ const Header = ({
         handleDeleteFolderButtonClick={handleDeleteFolderButtonClick}
         handleDeleteFileButtonClick={handleDeleteFileButtonClick}
         handleCreateFolderButtonClick={handleCreateFolderButtonClick}
+        handleCreateFileButtonClick={handleCreateFileButtonClick}
       />
     </header>
   );
