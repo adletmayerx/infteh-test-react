@@ -1,12 +1,12 @@
 type ExplorerDataType = {
   title: string;
-  id: number;
   extension?: string;
+  id: number;
   type: "file" | "folder";
-  childrenIds?: Array<number>;
-  parentId?: number;
-  children?: Array<ExplorerDataType>;
   value?: string;
+  parentId?: number;
+  childrenIds?: Array<number>;
+  children?: Array<ExplorerDataType>;
 };
 
 export default ExplorerDataType;

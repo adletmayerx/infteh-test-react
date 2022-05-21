@@ -4,13 +4,22 @@ import { Explorer, FileView } from "../";
 import selectedIdContext from "../../contexts/selected-id-context";
 import { MainComponentType } from "../../types";
 
-const MainComponent = ({ explorerData }: MainComponentType) => {
+const MainComponent = ({
+  explorerData,
+  handleFileDoubleClick,
+  activeFile
+}: MainComponentType) => {
   const { selectedId, setSelectedId } = useContext(selectedIdContext);
 
   return (
     <main className={styles.main}>
-      <Explorer explorerData={explorerData} setSelectedId={setSelectedId} />
-      <FileView />
+      <Explorer
+        explorerData={explorerData}
+        setSelectedId={setSelectedId}
+        selectedId={selectedId ? selectedId : -1}
+        handleFileDoubleClick={handleFileDoubleClick}
+      />
+      <FileView activeFile={activeFile} />
     </main>
   );
 };

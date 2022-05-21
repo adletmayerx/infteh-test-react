@@ -1,8 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./App.module.css";
-import { Header, MainComponent, PopupRename } from "./components";
-import { UnsortedDataType } from "./types";
+import {
+  Header,
+  MainComponent,
+  PopupRename,
+  PopupCreateFolder,
+} from "./components";
+import { ExplorerDataType } from "./types";
 import selectedIdContext from "./contexts/selected-id-context";
+import Folder from "./utils/FolderClass";
 
 function App() {
   let explorerDataUnsorted = [
@@ -49,7 +55,7 @@ function App() {
       parentId: 101,
       childrenIds: [2, 3],
     },
-  ] as Array<UnsortedDataType>;
+  ] as Array<ExplorerDataType>;
 
   const [array, setArray] = useState(explorerDataUnsorted);
 
@@ -58,9 +64,26 @@ function App() {
     null
   ) as any;
   const [popupRenameIsOpen, setPopupRenameIsOpen] = useState(false);
+  const [popupCreateFolderIsOpen, setPopupCreateFolderIsOpen] = useState(false);
+
+  const [openFiles, setOpenFiles] = useState([]) as any;
+  const [activeFile, setActiveFile] = useState() as any;
+
+  const handleFileDoubleClick = () => {
+    setOpenFiles([...openFiles, selectedExplorerDataItem]);
+  };
+
+  useEffect(() => {
+    setActiveFile(openFiles[openFiles.length - 1]);
+  }, [openFiles]);
+
+  useEffect(() => {
+    console.log(activeFile);
+  }, [activeFile]);
 
   const closeAllPopups = () => {
     setPopupRenameIsOpen(false);
+    setPopupCreateFolderIsOpen(false);
   };
 
   useEffect(() => {
@@ -75,6 +98,10 @@ function App() {
       return;
     }
     setPopupRenameIsOpen(true);
+  };
+
+  const handleCreateFolderButtonClick = () => {
+    setPopupCreateFolderIsOpen(true);
   };
 
   const handleDeleteFolderButtonClick = () => {
@@ -93,6 +120,10 @@ function App() {
 
   const handleRenamePopupFormSubmit = (newName: string) => {
     if (selectedExplorerDataItem.type === "file") {
+      if (!newName.includes(".")) {
+        alert("введите расширение файла");
+        return;
+      }
       const [name, extension] = newName.split(".");
       setArray(
         array.map((item) =>
@@ -115,6 +146,17 @@ function App() {
     closeAllPopups();
   };
 
+  const handlPopupCreateFolderSubmit = (title: string) => {
+    if (!selectedId) {
+      const newFolder = new Folder(title);
+      setArray([...array, newFolder]);
+    } else {
+      const newFolder = new Folder(title, selectedId);
+      setArray([...array, newFolder]);
+    }
+    closeAllPopups();
+  };
+
   return (
     <div className={styles.app}>
       <selectedIdContext.Provider value={{ selectedId, setSelectedId }}>
@@ -122,21 +164,31 @@ function App() {
           handleRenameButtonClick={handleRenameButtonClick}
           handleDeleteFolderButtonClick={handleDeleteFolderButtonClick}
           handleDeleteFileButtonClick={handleDeleteFileButtonClick}
+          handleCreateFolderButtonClick={handleCreateFolderButtonClick}
         />
-        <MainComponent explorerData={array} />
+
+        <MainComponent
+          explorerData={array}
+          handleFileDoubleClick={handleFileDoubleClick}
+          activeFile={activeFile}
+        />
+
         {selectedExplorerDataItem && (
           <PopupRename
             handleSubmit={handleRenamePopupFormSubmit}
             isOpen={popupRenameIsOpen}
             onClose={closeAllPopups}
             onOverlayClick={closeAllPopups}
-            initialInputValue={`${selectedExplorerDataItem.title}${
-              selectedExplorerDataItem.extension
-                ? `.${selectedExplorerDataItem.extension}`
-                : ""
-            }`}
+            selectedExplorerDataItem={selectedExplorerDataItem}
           />
         )}
+
+        <PopupCreateFolder
+          handleSubmit={handlPopupCreateFolderSubmit}
+          isOpen={popupCreateFolderIsOpen}
+          onClose={closeAllPopups}
+          onOverlayClick={closeAllPopups}
+        />
       </selectedIdContext.Provider>
     </div>
   );

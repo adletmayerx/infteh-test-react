@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "./FolderComponent.module.css";
-import { FolderComponentType, UnsortedDataType } from "../../types";
+import { FolderComponentType, ExplorerDataType } from "../../types";
 import FileComponent from "../FileComponent/FileComponent";
+import cn from "classnames/bind";
 import arrowIcon from "../../img/folder-arrow-icon.svg";
 import arrowIconIsOpen from "../../img/folder-arrow-icon-is-open.svg";
 import folderIcon from "../../img/folder-icon.svg";
@@ -11,7 +12,9 @@ const FolderComponent = ({
   title,
   id,
   handleFolderComponentClick,
+  handleFileDoubleClick,
   children,
+  selectedId,
 }: FolderComponentType) => {
   const [folders, setFolders] = useState([] as any);
   const [files, setFiles] = useState([] as any);
@@ -22,10 +25,10 @@ const FolderComponent = ({
       return;
     }
     setFolders(
-      children?.filter((item: UnsortedDataType) => item.type === "folder")
+      children?.filter((item: ExplorerDataType) => item.type === "folder")
     );
     setFiles(
-      children?.filter((item: UnsortedDataType) => item.type === "file")
+      children?.filter((item: ExplorerDataType) => item.type === "file")
     );
   }, [children]);
 
@@ -40,7 +43,9 @@ const FolderComponent = ({
   return (
     <div className={styles.folder}>
       <div
-        className={styles["folder__title-container"]}
+        className={cn(styles["folder__title-container"], {
+          [styles["folder__title-container_is_selected"]]: id === selectedId,
+        })}
         onClick={onFolderComponentCLick}
       >
         <img src={isOpen ? arrowIconIsOpen : arrowIcon} alt="arrow icon " />
@@ -49,24 +54,28 @@ const FolderComponent = ({
       </div>
       {isOpen && (
         <div className={styles["folder__children"]}>
-          {folders.map((folder: UnsortedDataType) => {
+          {folders.map((folder: ExplorerDataType) => {
             return (
               <FolderComponent
                 title={folder.title}
                 id={folder.id}
                 handleFolderComponentClick={handleFolderComponentClick}
+                handleFileDoubleClick={handleFileDoubleClick}
                 children={folder.children}
+                selectedId={selectedId}
                 key={folder.id}
               />
             );
           })}
-          {files.map((file: UnsortedDataType) => {
+          {files.map((file: ExplorerDataType) => {
             return (
               <FileComponent
                 title={file.title}
                 extension={file.extension}
                 id={file.id}
                 handleFileComponentClick={handleFolderComponentClick}
+                handleFileDoubleClick={handleFileDoubleClick}
+                selectedId={selectedId}
                 key={file.id}
               />
             );

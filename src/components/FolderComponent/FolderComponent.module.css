@@ -1,5 +1,4 @@
 .folder {
-  border: 1px solid green;
   user-select: none;
 }
 
@@ -16,6 +15,11 @@
   opacity: 0.6;
 }
 
+.folder__title-container_is_selected {
+  background: lightblue;
+  color: #fff;
+}
+
 .folder__title {
   margin: 0;
   padding: 0;
@@ -23,4 +27,5 @@
 
 .folder__children {
   margin-left: 20px;
+  border-left: 1px solid lightgrey;
 }

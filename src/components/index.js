@@ -8,6 +8,7 @@ import FileView from "./FileView/FileView";
 import FolderComponent from "./FolderComponent/FolderComponent";
 import Editor from "./Editor/Editor";
 import PopupRename from "./PopupRename/PopupRename";
+import PopupCreateFolder from "./PopupCreateFolder/PopupCreateFolder";
 
 export {
   Header,
@@ -20,4 +21,5 @@ export {
   FileView,
   Editor,
   PopupRename,
+  PopupCreateFolder,
 };

@@ -1,15 +1,19 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Popup from "../shared/Popup/Popup";
 import { PopupCreateFolderType } from "../../types";
+import styles from "./PopupCreateFolder.module.css";
+import cn from "classnames/bind";
 
-const PopupRename = ({
+const PopupCreateFolder = ({
   handleSubmit,
   isOpen,
   onClose,
   onOverlayClick,
-  initialInputValue,
-}: PopupCreateFolderType) => {
-  const [value, setValue] = useState(initialInputValue);
+  }: PopupCreateFolderType) => {
+  const [value, setValue] = useState("");
+  const [placeholderValue, setPlaceHolderValue] = useState("");
+  const [isValid, setIsValid] = useState(true);
+  const [error, setError] = useState("");
 
   const handleClose = () => {
     onClose();
@@ -25,20 +29,53 @@ const PopupRename = ({
     handleSubmit(value);
   };
 
+  useEffect(() => {
+    setPlaceHolderValue("название_папки");
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (value === "") {
+      setIsValid(false);
+      setError("введите название");
+    } else {
+      setIsValid(true);
+      setError("");
+    }
+  }, [value]);
+
   return (
     <div>
       <Popup
         isOpen={isOpen}
-        title={"Переименовать"}
+        title={"Создать Папку"}
         onClose={handleClose}
         onOverlayClick={handleClose}
       >
-        <form onSubmit={onSubmit}>
-          <input type="text" value={value} onChange={handleChange} />
+        <form className={styles["popup-form"]} onSubmit={onSubmit}>
+          <input
+            className={styles["popup-form__input"]}
+            type="text"
+            value={value}
+            onChange={handleChange}
+            placeholder={placeholderValue}
+            required
+          />
+          {error && (
+            <span className={styles["popup-form__input-error"]}>{error}</span>
+          )}
+          <button
+            type="submit"
+            disabled={!isValid}
+            className={cn(styles["popup-form__submit-button"], {
+              [styles["popup-form__submit-button_inactive"]]: !isValid,
+            })}
+          >
+            подтвердить
+          </button>
         </form>
       </Popup>
     </div>
   );
 };
 
-export default PopupRename;
+export default PopupCreateFolder;

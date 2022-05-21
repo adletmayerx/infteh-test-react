@@ -6,7 +6,7 @@ const editorLanguages = {
   js: javascript(),
   html: html(),
   css: css(),
-};
+} as any;
 
 const explorerDataUnsorted = [
   {

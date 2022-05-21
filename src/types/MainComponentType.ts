@@ -1,7 +1,9 @@
-import { UnsortedDataType } from "./";
+import { ExplorerDataType } from "./";
 
 type MainComponentType = {
-  explorerData: Array<UnsortedDataType>;
+  explorerData: Array<ExplorerDataType>;
+  handleFileDoubleClick: () => void;
+  activeFile: ExplorerDataType;
 };
 
 export default MainComponentType;

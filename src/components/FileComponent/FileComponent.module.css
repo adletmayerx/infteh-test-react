@@ -1,6 +1,10 @@
 .file {
-  border: 1px solid blue;
   user-select: none;
+}
+
+.file_is_selected {
+  background: lightblue;
+  color: #fff;
 }
 
 .file__title {

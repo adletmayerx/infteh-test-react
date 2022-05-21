@@ -7,12 +7,17 @@ const ToolBar = ({
   handleRenameButtonClick,
   handleDeleteFolderButtonClick,
   handleDeleteFileButtonClick,
+  handleCreateFolderButtonClick
 }: ToolBarType) => {
+  const handleNotImplentedButtonFunctionalityClick = () => {
+    alert("функциональность не имплементирована :С");
+  };
+  
   return (
     <ul className={styles["tool-bar"]}>
       <ToolBarButton
         title={"Создать Папку"}
-        handleButtonClick={handleRenameButtonClick}
+        handleButtonClick={handleCreateFolderButtonClick}
       />
       <ToolBarButton
         title={"Удалить Папку"}
@@ -20,11 +25,11 @@ const ToolBar = ({
       />
       <ToolBarButton
         title={"Загрузить файл"}
-        handleButtonClick={handleRenameButtonClick}
+        handleButtonClick={handleNotImplentedButtonFunctionalityClick}
       />
       <ToolBarButton
         title={"Скачать файл"}
-        handleButtonClick={handleRenameButtonClick}
+        handleButtonClick={handleNotImplentedButtonFunctionalityClick}
       />
       <ToolBarButton
         title={"Удалить файл"}
