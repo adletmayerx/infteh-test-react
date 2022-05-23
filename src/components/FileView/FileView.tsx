@@ -24,7 +24,7 @@ const FileView = ({
       {activeFile ? (
         <>
           <ul className={styles["file-view__open-files-list"]}>
-            {openFiles.map((file) => {
+            {openFiles.map((file: ExplorerDataType) => {
               return (
                 <li
                   className={styles["file-view__open-files-list-item"]}

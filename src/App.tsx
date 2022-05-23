@@ -52,7 +52,11 @@ function App() {
   };
 
   const handleFileDoubleClick = () => {
-    if (openFiles.includes(selectedExplorerDataItem)) {
+    if (
+      openFiles.some(
+        (file: ExplorerDataType) => file.id === selectedExplorerDataItem.id
+      )
+    ) {
       return;
     }
     setOpenFiles([...openFiles, selectedExplorerDataItem]);
@@ -118,7 +122,6 @@ function App() {
   };
 
   const handleRenamePopupFormSubmit = (newName: string) => {
-    console.log(selectedId);
     if (selectedExplorerDataItem.type === "file") {
       const [name, extension] = newName.split(".");
       setArray(
@@ -126,6 +129,13 @@ function App() {
           return item.id === selectedId
             ? { ...item, title: name, extension: extension }
             : item;
+        })
+      );
+      setOpenFiles(
+        openFiles.map((file: ExplorerDataType) => {
+          return file.id === selectedId
+            ? { ...file, title: name, extension: extension }
+            : file;
         })
       );
     } else {
