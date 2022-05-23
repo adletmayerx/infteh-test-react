@@ -1,4 +1,4 @@
-class File {
+class FileItem {
   title: string;
   id: number;
   type: "file";
@@ -16,4 +16,4 @@ class File {
   }
 }
 
-export default File;
+export default FileItem;

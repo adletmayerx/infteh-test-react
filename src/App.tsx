@@ -12,8 +12,8 @@ import {
 } from "./components";
 import { ExplorerDataType } from "./types";
 import selectedIdContext from "./contexts/selected-id-context";
-import Folder from "./utils/FolderClass";
-import File from "./utils/FileClass";
+import FolderItem from "./utils/FolderClass";
+import FileItem from "./utils/FileClass";
 import { explorerDataUnsorted } from "./utils/constants";
 
 function App() {
@@ -151,7 +151,7 @@ function App() {
 
   const handlPopupCreateFolderSubmit = (title: string) => {
     if (!selectedId) {
-      const newFolder = new Folder(title);
+      const newFolder = new FolderItem(title);
       setArray([...array, newFolder]);
     } else {
       const parentId =
@@ -159,7 +159,7 @@ function App() {
           ? selectedExplorerDataItem.parentId
           : selectedExplorerDataItem.id;
 
-      const newFolder = new Folder(title, parentId);
+      const newFolder = new FolderItem(title, parentId);
       setArray([...array, newFolder]);
     }
     closeAllPopups();
@@ -167,7 +167,7 @@ function App() {
 
   const handlPopupCreateFileSubmit = (title: string) => {
     if (!selectedId) {
-      const newFile = new File(title);
+      const newFile = new FileItem(title);
       setArray([...array, newFile]);
     } else {
       const parentId =
@@ -175,7 +175,7 @@ function App() {
           ? selectedExplorerDataItem.parentId
           : selectedExplorerDataItem.id;
 
-      const newFile = new File(title, parentId);
+      const newFile = new FileItem(title, parentId);
       setArray([...array, newFile]);
       setOpenFiles([...openFiles, newFile]);
     }
@@ -240,6 +240,7 @@ function App() {
       document.removeEventListener("click", handleClick);
     };
   }, []);
+
   return (
     <div className={styles.app}>
       <selectedIdContext.Provider value={{ selectedId, setSelectedId }}>
