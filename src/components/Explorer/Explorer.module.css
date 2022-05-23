@@ -1,0 +1,13 @@
+.explorer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 150px;
+  overflow-x: auto;
+  padding-left: 10px;
+  background: #fefefe;
+  border-radius: 10px;
+  padding: 10px;
+}

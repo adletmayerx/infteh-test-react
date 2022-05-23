@@ -6,9 +6,9 @@ type ToolBarButtonType = {
   handleButtonClick: () => void;
 };
 
-const ToolBarButton = ({ title }: ToolBarButtonType) => {
+const ToolBarButton = ({ title, handleButtonClick }: ToolBarButtonType) => {
   return (
-    <button type="button" className={styles.button}>
+    <button type="button" className={styles.button} onClick={handleButtonClick}>
       {title}
     </button>
   );

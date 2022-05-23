@@ -1,0 +1,20 @@
+.file {
+  user-select: none;
+}
+
+.file_is_selected {
+  background: lightblue;
+  color: #fff;
+}
+
+.file__title {
+  margin: 0;
+  padding: 0;
+  opacity: 1;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+}
+
+.file__title:hover {
+  opacity: 0.6;
+}
