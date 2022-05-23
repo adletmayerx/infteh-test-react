@@ -1,4 +1,4 @@
-class Folder {
+class FolderItem {
   title: string;
   id: number;
   type: "folder";
@@ -11,4 +11,4 @@ class Folder {
   }
 }
 
-export default Folder;
+export default FolderItem;
