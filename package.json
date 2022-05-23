@@ -2,7 +2,7 @@
   "name": "infteh-test-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://asadrtdinov.github.io/inf-teh-test-task",
+  "homepage": "http://asadrtdinov.github.io/infteh-test-react",
   "dependencies": {
     "@codemirror/lang-css": "^0.20.0",
     "@codemirror/lang-html": "^0.20.0",

@@ -19,7 +19,7 @@ import { explorerDataUnsorted } from "./utils/constants";
 function App() {
   const [array, setArray] = useState(explorerDataUnsorted);
 
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState(null) as any;
   const [selectedExplorerDataItem, setSelectedExplorerDataItem] = useState(
     null
   ) as any;
@@ -118,30 +118,24 @@ function App() {
   };
 
   const handleRenamePopupFormSubmit = (newName: string) => {
+    console.log(selectedId);
     if (selectedExplorerDataItem.type === "file") {
-      if (!newName.includes(".")) {
-        alert("введите расширение файла");
-        return;
-      }
       const [name, extension] = newName.split(".");
       setArray(
-        array.map((item) =>
-          item.id === selectedId
+        array.map((item) => {
+          return item.id === selectedId
             ? { ...item, title: name, extension: extension }
-            : item
-        )
+            : item;
+        })
       );
     } else {
       setArray(
         array.map((item) => {
-          if (item.id === selectedId) {
-            return { ...item, title: newName };
-          } else {
-            return item;
-          }
+          return item.id === selectedId ? { ...item, title: newName } : item;
         })
       );
     }
+
     closeAllPopups();
   };
 
@@ -226,7 +220,6 @@ function App() {
     const handleClick = () => {
       setFolderContextMenuIsOpen(false);
       setFileContextMenuIsOpen(false);
-      setSelectedId(null);
     };
 
     document.addEventListener("contextmenu", handleContextMenu);
