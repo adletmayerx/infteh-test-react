@@ -1,8 +1,7 @@
 # Тестовое задание ИнфТех
 
 ## Ссылка
-<a href="http://example.com/" target="_blank">Hello, world!</a>
-[https://asadrtdinov.github.io/infteh-test-react/](https://asadrtdinov.github.io/infteh-test-react/)
+<a href="[http://example.com/](https://asadrtdinov.github.io/infteh-test-react/)" target="_blank">[Hello, world!](https://asadrtdinov.github.io/infteh-test-react/)</a>
 
 ## Запуск проекта локально
 
