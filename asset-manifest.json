@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/infteh-test-react/static/css/main.0d5b5fbf.css",
+    "main.js": "/infteh-test-react/static/js/main.31dd5ebd.js",
+    "static/media/close-button.svg": "/infteh-test-react/static/media/close-button.069e609eeee92c475a22.svg",
+    "index.html": "/infteh-test-react/index.html",
+    "static/media/folder-icon-open.svg": "/infteh-test-react/static/media/folder-icon-open.793e4aea1a3ac83e6534400ebd598d52.svg",
+    "static/media/folder-icon.svg": "/infteh-test-react/static/media/folder-icon.5c15e67a730e7cad9ae878113a21da18.svg",
+    "static/media/folder-arrow-icon.svg": "/infteh-test-react/static/media/folder-arrow-icon.257af533c27c7e19394de3916703bfd1.svg",
+    "static/media/folder-arrow-icon-is-open.svg": "/infteh-test-react/static/media/folder-arrow-icon-is-open.f489f4124477cf529af9d3d526c3b62d.svg",
+    "main.0d5b5fbf.css.map": "/infteh-test-react/static/css/main.0d5b5fbf.css.map",
+    "main.31dd5ebd.js.map": "/infteh-test-react/static/js/main.31dd5ebd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0d5b5fbf.css",
+    "static/js/main.31dd5ebd.js"
+  ]
+}
